@@ -1,0 +1,53 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+update_interval 1.0
+total_run_times 0
+short_units yes
+if_up_strictness address
+use_spacer left
+override_utf8_locale no
+cpu_avg_samples 2
+
+TEXT
+
+[
+ { "full_text" : "позитрон " , "color" : "\#cdd2e5" },
+
+ { "full_text" : " NETWORK:" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${downspeedf enp3s0}K↓" , "color" : "\#00ff00" , "separator" : false },
+ { "full_text" : "${upspeedf enp3s0}K↑ " , "color" : "\#ff0000" },
+
+ { "full_text" : " CPU TEMP:" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${execi 5 sensors | grep Physical | awk '{ print $4 }' | sed 's|+||g'} " , "color" : "\#c32e29" },
+
+ { "full_text" : " GPU TEMP:" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${execi 5 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader}°C " , "color" : "\#c3a429" },
+
+ { "full_text" : " CPU / LOAD:" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${cpu}% / ${loadavg 1} " , "color" : ${if_match ${cpu}>50}"\#ff0000"${else}"\#39c329"${endif} },
+ 
+ { "full_text" : " RAM:" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${mem} " , "color" : ${if_match ${memperc}>80}"\#ff0000"${else}"\#29a3c3"${endif} },
+ 
+ { "full_text" : " FS (/home):" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${fs_used /home} " , "color" : ${if_match ${fs_used_perc /home}>90}"\#ff0000"${else}"\#c329bd"${endif} },
+
+ { "full_text" : " SWAP:" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${swap} " , "color" : ${if_match ${swapperc}>10}"\#ff0000"${else}"\#666699"${endif} },
+
+ { "full_text" : " DISK I/O:" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${diskio} " , "color" : "\#964364" },
+
+ { "full_text" : " VOLUME:" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${execi 2 amixer get Master | ~/.i3/volume-levels.awk} " , "color" : "\#669999" },
+
+ { "full_text" : " LANG:" , "color" : "\#ffffff" , "separator" : false },
+ { "full_text" : "${exec ~/.i3/lang.sh} " , "color" : "\#9966ff" },
+
+ { "full_text" : " ${time %d/%m/%Y - %H:%M:%S}" , "color" : "\#aaf096" }
+],
+
+

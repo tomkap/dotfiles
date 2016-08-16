@@ -1,0 +1,7 @@
+xset r rate 350 35
+xset +fp /usr/share/fonts/terminus/
+xset fp rehash
+xset -dpms
+xset s off
+xrdb ~/.Xresources
+setxkbmap -layout "us,gr" -option "grp:alt_shift_toggle"

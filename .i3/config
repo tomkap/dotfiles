@@ -1,0 +1,203 @@
+# Generic stuff
+set $mod Mod4
+font -misc-fixed-medium-r-normal--15-120-75-75-C-70-iso10646-1
+font pango:DejaVu Sans Mono 8
+floating_modifier $mod
+
+# Start a terminal
+bindsym $mod+Return exec urxvt
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id dmenu_run -b -i
+# bindsym $mod+Shift+d execi j4-dmenu-desktop --dmenu="dmenu -b -i"
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+bindsym $mod+Shift+d exec --no-startup-id j4-dmenu-desktop --dmenu="dmenu -b -i"
+
+# Change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# Alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# Alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split in horizontal orientation
+bindsym $mod+h split h
+
+# Split in vertical orientation
+bindsym $mod+v split v
+
+# Enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# Focus the parent container
+bindsym $mod+a focus parent
+
+# Focus the child container
+bindsym $mod+z focus child
+
+# Switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e mode "exit", exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? Press enter to exit' -b 'Yes, exit i3' 'i3-msg exit'"
+
+mode "exit" {
+	bindsym Return exit
+	bindsym Escape mode "default", exec pkill i3-nagbar
+}
+
+# Resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+equal move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+equal scratchpad show
+
+# Window options
+for_window [class="Gnome-calculator"] floating enable
+new_window 1pixel
+hide_edge_borders both
+
+# Custom keybindings
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 4%+ unmute
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 4%- unmute
+bindsym $mod+F9 exec --no-startup-id ~/.toggle-analog-output.sh
+bindsym XF86AudioMute exec --no-startup-id amixer -q set Master toggle
+bindsym XF86MyComputer exec dolphin
+bindsym XF86HomePage exec firefox
+bindsym XF86Calculator exec gnome-calculator
+bindsym XF86AudioMedia exec --no-startup-id gmpc
+bindsym Print exec --no-startup-id ~/.i3/scrot.sh 
+bindsym Scroll_Lock exec --no-startup-id i3lock -c 000000 && sleep 3 && xset dpms force off
+bindsym $mod+Scroll_Lock exec systemctl suspend
+bindsym Pause exec --no-startup-id xkill
+bindsym $mod+grave workspace back_and_forth
+bindsym $mod+Control+Right workspace next
+bindsym $mod+Control+Left workspace prev
+bindsym XF86Sleep exec --no-startup-id i3lock -c 000000 -n
+
+# Autostart
+exec --no-startup-id parcellite
+exec --no-startup-id ~/.fehbg
+
+# Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
+bar {
+	output DVI-I-2
+	tray_output primary
+	status_command ~/.i3/conky-i3.sh
+	position top
+
+	colors {
+		background #000000
+		statusline #ffffff
+		
+		focused_workspace  #ffffff #285577
+		active_workspace   #ffffff #333333
+		inactive_workspace #888888 #222222
+		urgent_workspace   #ffffff #900000
+	}
+}
+
+bar {
+	output DVI-I-3
+	tray_output primary
+	status_command ~/.i3/conky-i3.sh
+	position top
+
+	colors {
+		background #000000
+		statusline #ffffff
+		
+		focused_workspace  #ffffff #285577
+		active_workspace   #ffffff #333333
+		inactive_workspace #888888 #222222
+		urgent_workspace   #ffffff #900000
+	}
+}
